@@ -1,49 +1,220 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Important Notes - FYJC Portal</title>
-  <style>
-    /* Basic reset */
-    * { margin:0; padding:0; box-sizing:border-box; }
-
-    body {
-      font-family: "Poppins", sans-serif;
-      background-color: #f9f9f9;
-      color: #222;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-      padding: 16px;
-    }
-
-    .message-box {
-      background: #ffffff;
-      padding: 30px 20px;
-      border-radius: 16px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      max-width: 400px;
-    }
-
-    .message-box h1 {
-      font-size: 1.5rem;
-      color: #1976d2;
-      margin-bottom: 12px;
-    }
-
-    .message-box p {
-      font-size: 1rem;
-      color: #555;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biology Test - Chapter 1 & 2</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-  <div class="message-box">
-    <h1>No Important Notes Available</h1>
-    <p>Important notes are not available yet. They will be available soon. Stay tuned!</p>
-  </div>
+    <!-- Welcome Screen -->
+    <div class="screen active" id="welcomeScreen">
+        <div class="welcome-container">
+            <div class="welcome-icon">
+                <i class="fas fa-dna"></i>
+            </div>
+            <h1 class="welcome-title">Biology Test</h1>
+            <h2 class="welcome-subtitle">Chapter 1 & 2: Systematics & Classification</h2>
+
+            <div class="test-info-grid">
+                <div class="info-box">
+                    <i class="fas fa-book"></i>
+                    <span>10 Questions</span>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-star"></i>
+                    <span>10 Marks</span>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-hourglass-half"></i>
+                    <span>15 Minutes</span>
+                </div>
+            </div>
+
+            <div class="student-info-section">
+                <h3>Enter Your Details</h3>
+                <input type="text" id="studentName" placeholder="Full Name" class="input-field">
+                <input type="text" id="studentRoll" placeholder="Roll Number (Optional)" class="input-field">
+            </div>
+
+            <div class="instructions-box">
+                <h3>Instructions</h3>
+                <ul>
+                    <li>Read each question carefully</li>
+                    <li>Select one option from the four choices</li>
+                    <li>You can navigate between questions</li>
+                    <li>Click Submit after answering all questions</li>
+                    <li>Each correct answer is 1 mark</li>
+                </ul>
+            </div>
+
+            <button class="btn-start" id="startBtn">
+                <i class="fas fa-play"></i> Start Test
+            </button>
+        </div>
+    </div>
+
+    <!-- Test Screen -->
+    <div class="screen" id="testScreen">
+        <div class="test-container">
+            <!-- Header -->
+            <div class="test-header">
+                <div class="header-left">
+                    <h2>Biology Test</h2>
+                    <p id="quesInfo">Question 1 of 10</p>
+                </div>
+                <div class="header-right">
+                    <div class="timer" id="timerDisplay">
+                        <i class="fas fa-clock"></i>
+                        <span id="timer">15:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="progress-bar-container">
+                <div class="progress-bar" id="progressBar"></div>
+            </div>
+
+            <!-- Question Section -->
+            <div class="question-section">
+                <div class="question-box">
+                    <h3 class="question-text" id="questionText"></h3>
+                </div>
+
+                <!-- Options -->
+                <div class="options-box" id="optionsBox"></div>
+            </div>
+
+            <!-- Buttons Section -->
+            <div class="buttons-section">
+                <button class="btn-nav btn-prev" id="prevBtn" disabled>
+                    <i class="fas fa-arrow-left"></i> Previous
+                </button>
+                <button class="btn-nav btn-next" id="nextBtn">
+                    Next <i class="fas fa-arrow-right"></i>
+                </button>
+                <button class="btn-submit" id="submitBtn">
+                    <i class="fas fa-check"></i> Submit Test
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Modal -->
+    <div class="modal" id="resultsModal">
+        <div class="modal-content results-modal">
+            <div class="results-header">
+                <div class="results-icon" id="resultsIcon">
+                    <i class="fas fa-trophy"></i>
+                </div>
+                <h2>Test Completed!</h2>
+            </div>
+
+            <div class="score-circle-container">
+                <svg class="score-circle" viewBox="0 0 200 200">
+                    <defs>
+                        <linearGradient id="scoreGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" style="stop-color:#6366f1;stop-opacity:1" />
+                            <stop offset="100%" style="stop-color:#8b5cf6;stop-opacity:1" />
+                        </linearGradient>
+                    </defs>
+                    <circle cx="100" cy="100" r="90" class="score-background"></circle>
+                    <circle cx="100" cy="100" r="90" class="score-progress" id="scoreProgress"></circle>
+                </svg>
+                <div class="score-text">
+                    <span class="score-value" id="scoreValue">0</span>
+                    <span class="score-total">/10</span>
+                </div>
+            </div>
+
+            <div class="results-stats">
+                <div class="stat">
+                    <i class="fas fa-check-circle"></i>
+                    <div>
+                        <span class="stat-label">Correct</span>
+                        <span class="stat-value" id="correctCount">0</span>
+                    </div>
+                </div>
+                <div class="stat">
+                    <i class="fas fa-times-circle"></i>
+                    <div>
+                        <span class="stat-label">Incorrect</span>
+                        <span class="stat-value" id="incorrectCount">0</span>
+                    </div>
+                </div>
+                <div class="stat">
+                    <i class="fas fa-percent"></i>
+                    <div>
+                        <span class="stat-label">Percentage</span>
+                        <span class="stat-value" id="percentage">0%</span>
+                    </div>
+                </div>
+                <div class="stat">
+                    <i class="fas fa-hourglass-end"></i>
+                    <div>
+                        <span class="stat-label">Time</span>
+                        <span class="stat-value" id="timeTaken">0:00</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="performance-message" id="performanceMsg"></div>
+
+            <div class="results-buttons">
+                <button class="btn-review" id="reviewBtn">
+                    <i class="fas fa-eye"></i> Review Answers
+                </button>
+                <button class="btn-download" id="downloadBtn">
+                    <i class="fas fa-download"></i> Download
+                </button>
+                <button class="btn-restart" id="restartBtn">
+                    <i class="fas fa-redo"></i> Retake Test
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Review Modal -->
+    <div class="modal" id="reviewModal">
+        <div class="modal-content review-modal">
+            <div class="review-header">
+                <h2>Answer Review</h2>
+                <button class="btn-close" id="closeReviewBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="review-content" id="reviewContent"></div>
+            <div class="review-buttons">
+                <button class="btn-secondary" id="backBtn">
+                    <i class="fas fa-arrow-left"></i> Back
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div class="modal" id="confirmModal">
+        <div class="modal-content confirm-modal">
+            <div class="confirm-icon">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h3>Submit Test?</h3>
+            <p id="confirmMsg">Are you sure you want to submit the test?</p>
+            <div class="confirm-buttons">
+                <button class="btn-cancel" id="cancelBtn">Cancel</button>
+                <button class="btn-confirm" id="confirmSubmitBtn">Submit</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast">
+        <i class="fas fa-info-circle"></i>
+        <span id="toastMsg"></span>
+    </div>
+
+    <script src="script.js"></script>
 </body>
 </html>
